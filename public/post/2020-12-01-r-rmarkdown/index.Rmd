@@ -5,23 +5,34 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 categories: ["R"]
 tags: ["R-Markdown", "Blogdown", "Web Site"]
 params:
-  code: False
+  code: FALSE
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = params$code)
+knitr::opts_chunk$set(warning =  params$code)
+knitr::opts_chunk$set(message =   params$code)
+```
+
+<P align="center">
+![](images/hex-rmarkdown.png){width=10%}
+</p>
+```{r setup1, include=FALSE}
+library(knitr)
+library(plotly)
+library(kableExtra)
+library(magrittr)
+library(emo)
 ```
 
 # R Markdown
 
 R Markdown es una poderosa herramienta que no sólo permite crear documentos sino también muchos otros proyectos como libros y páginas web.
 
-Se puede poner código de R:
-
+Se puede poner tablas de R:
 ```{r cars}
-summary(cars)
-fit <- lm(dist ~ speed, data = cars)
-fit
+tabla<-kable_classic_2(kable_input = kable_styling(kbl(head(mtcars, 5),caption = "Tabla de Carros"), bootstrap_options = c("striped", "hover", "condensed", "responsive")), full_width = F, html_font = "Cambria") 
+tabla %>% add_header_above()
 ```
 
 # Incluir Gráficos
@@ -49,6 +60,19 @@ ggplot(Orange, aes(x = age,
   guides(color = FALSE) +
   theme_bw()
 ```
+Y otro más:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+Y por supuesto pueden enviar ggplot y mucho más.
+
+```{r, results='asis'}
+data <- data.frame(murder = USArrests$Murder, state = tolower(rownames(USArrests))) 
+map <- map_data("state") 
+l <- ggplot(data, aes(fill = murder))
+l + geom_map(aes(map_id = state), map = map) +        expand_limits(x = map$long, y = map$lat) 
+```
 
 Y ahora un poco de Plotly:
 
@@ -57,7 +81,7 @@ library(plotly)
 
 fig <- plot_ly(
     domain = list(x = c(0, 1), y = c(0, 1)),
-    value = 270,
+    value = 100,
     title = list(text = "Speed"),
     type = "indicator",
     mode = "gauge+number") 
@@ -66,3 +90,5 @@ fig <- fig %>%
 
 fig
 ```
+<img src="images/RAY.png" alt="Me" width="300px" align="left"> Wink!`r emo::ji("wink")`
+
