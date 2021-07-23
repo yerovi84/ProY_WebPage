@@ -2,10 +2,13 @@
 title: "Mi Primer Post de R-Markdown"
 author: "Alejandro Yerovi"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-categories: ["R"]
-tags: ["R-Markdown", "Blogdown", "Web Site"]
 params:
-  code: FALSE
+  code: no
+tags:
+- R-Markdown
+- Blogdown
+- Web Site
+categories: R
 ---
 
 ```{r setup, include=FALSE}
@@ -65,7 +68,7 @@ Y otro más:
 ```{r pressure, echo=FALSE}
 plot(pressure)
 ```
-Y por supuesto pueden enviar ggplot y mucho más.
+Y por supuesto pueden enviar ggplot y mucho más. TEST
 
 ```{r, results='asis'}
 data <- data.frame(murder = USArrests$Murder, state = tolower(rownames(USArrests))) 
